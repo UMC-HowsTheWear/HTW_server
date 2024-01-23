@@ -24,3 +24,9 @@ aroundRouter.get('/next_week/:id/site', asyncHandler());
 aroundRouter.get('/last_year', asyncHandler());
 aroundRouter.get('/last_year/:id', asyncHandler());
 aroundRouter.get('/last_year/:id/site', asyncHandler());
+
+//다른사람들
+userRouter.get('/people',asyncHandler());
+
+//다른사람들 상세보기
+userRouter.get('/other',asyncHandler());
