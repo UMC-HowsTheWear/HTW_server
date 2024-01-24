@@ -7,6 +7,7 @@ import SwaggerUi from 'swagger-ui-express';
 
 import { userRouter } from './src/routes/user.route.js';
 import { aroundRouter } from './src/routes/around.route.js';
+import { postRouter } from './src/routes/post.route.js';
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use('/api-docs', SwaggerUi.serve, SwaggerUi.setup(specs));
 // router setting
 app.use('/user', userRouter);
 app.use('/user/around',aroundRouter);
+app.use('/user/:id', postRouter);
 
 app.use((err, req, res, next) => {
     // 템플릿 엔진 변수 설정
