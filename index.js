@@ -41,6 +41,11 @@ app.use((err, req, res, next) => {
     res.status(err.data.status || status.INTERNAL_SERVER_ERROR).send(response(err.data));
 });
             
+
+////시범용
+//안녕하세용
+//한번더
+
 app.listen(app.get('port'), () => {
     console.log(`Example app listening on port ${app.get('port')}`);
 });
