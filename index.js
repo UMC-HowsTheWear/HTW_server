@@ -22,6 +22,12 @@ app.use(express.static('public'));          // 정적 파일 접근
 app.use(express.json());                    // request의 본문을 json으로 해석할 수 있도록 함 (JSON 형태의 요청 body를 파싱하기 위함)
 app.use(express.urlencoded({extended: false})); // 단순 객체 문자열 형태로 본문 데이터 해석
 
+// 시험중 ~~~~~~~
+// 마이크테스트~~~~~~~~~~~~~~
+// 마이크테스트~~~~~~~~~~~~~~
+// 마이크테스트~~~~~~~~~~~~~~
+
+
 app.get('/', (req, res, next) => {
     res.send(response(status.SUCCESS, "루트 페이지!"));
 })
@@ -42,11 +48,6 @@ app.use((err, req, res, next) => {
     console.log("error", err);
     res.status(err.data.status || status.INTERNAL_SERVER_ERROR).send(response(err.data));
 });
-            
-
-////시범용
-//안녕하세용
-//한번더
 
 app.listen(app.get('port'), () => {
     console.log(`Example app listening on port ${app.get('port')}`);
