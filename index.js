@@ -52,3 +52,13 @@ app.use((err, req, res, next) => {
 app.listen(app.get('port'), () => {
     console.log(`Example app listening on port ${app.get('port')}`);
 });
+
+
+
+
+
+
+
+////시범용
+//안녕하세용
+//한번더
