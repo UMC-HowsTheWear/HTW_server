@@ -5,8 +5,8 @@ import { response } from './config/response.js';
 import { specs } from './swagger/swagger.config.js';
 import SwaggerUi from 'swagger-ui-express';
 
-import { userRouter } from './src/routes/user.route.js';
-import { aroundRouter } from './src/routes/around.route.js';
+//import { userRouter } from './src/routes/user.route.js';
+//import { aroundRouter } from './src/routes/around.route.js';
 import { postRouter } from './src/routes/post.route.js';
 
 dotenv.config();
@@ -22,9 +22,6 @@ app.use(express.static('public'));          // 정적 파일 접근
 app.use(express.json());                    // request의 본문을 json으로 해석할 수 있도록 함 (JSON 형태의 요청 body를 파싱하기 위함)
 app.use(express.urlencoded({extended: false})); // 단순 객체 문자열 형태로 본문 데이터 해석
 
-// 시험중 ~~~~~~~
-// 마이크테스트~~~~~~~~~~~~~~
-
 app.get('/', (req, res, next) => {
     res.send(response(status.SUCCESS, "루트 페이지!"));
 })
@@ -33,8 +30,8 @@ app.get('/', (req, res, next) => {
 app.use('/api-docs', SwaggerUi.serve, SwaggerUi.setup(specs));
 
 // router setting
-app.use('/user', userRouter);
-app.use('/user/around',aroundRouter);
+//app.use('/user', userRouter);
+//app.use('/user/around',aroundRouter);
 app.use('/user/:id', postRouter);
 
 app.use((err, req, res, next) => {
@@ -49,13 +46,3 @@ app.use((err, req, res, next) => {
 app.listen(app.get('port'), () => {
     console.log(`Example app listening on port ${app.get('port')}`);
 });
-
-
-
-
-
-
-
-////시범용
-//안녕하세용
-//한번더
