@@ -2,8 +2,9 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import { response } from './config/response.js';
-import { specs } from './swagger/swagger.config.js';
+import { specs } from './config/swagger.config.js';
 import SwaggerUi from 'swagger-ui-express';
+import { status } from './config/response.status.js';
 
 //import { userRouter } from './src/routes/user.route.js';
 //import { aroundRouter } from './src/routes/around.route.js';
