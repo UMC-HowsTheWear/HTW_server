@@ -5,8 +5,8 @@ import { response } from './config/response.js';
 import { specs } from './swagger/swagger.config.js';
 import SwaggerUi from 'swagger-ui-express';
 
-import { userRouter } from './src/routes/user.route.js';
-import { aroundRouter } from './src/routes/around.route.js';
+//import { userRouter } from './src/routes/user.route.js';
+//import { aroundRouter } from './src/routes/around.route.js';
 import { postRouter } from './src/routes/post.route.js';
 
 dotenv.config();
@@ -30,8 +30,8 @@ app.get('/', (req, res, next) => {
 app.use('/api-docs', SwaggerUi.serve, SwaggerUi.setup(specs));
 
 // router setting
-app.use('/user', userRouter);
-app.use('/user/around',aroundRouter);
+//app.use('/user', userRouter);
+//app.use('/user/around',aroundRouter);
 app.use('/user/:id', postRouter);
 
 app.use((err, req, res, next) => {
@@ -46,13 +46,3 @@ app.use((err, req, res, next) => {
 app.listen(app.get('port'), () => {
     console.log(`Example app listening on port ${app.get('port')}`);
 });
-
-
-
-
-
-
-
-////시범용
-//안녕하세용
-//한번더
