@@ -1,19 +1,18 @@
-const express = require('express');
-const router = express.Router();
+// user.route.js
 
-// 로그인 라우터
-router.get('/login', (req, res) => {
-  res.send('로그인 페이지');
-});
+import express from "express";
+import asyncHandler from 'express-async-handler';
+import { userLogin } from "../controllers/user.controller.js";
+import { userJoin } from "../controllers/user.controller.js";
+// import { userHome } from "../controllers/user.controller.js";
+// userReadItem
+export const userRouter = express.Router({mergeParams: true});
 
-// 회원가입 라우터
-router.get('/join', (req, res) => {
-  res.send('회원가입 페이지');
-});
+//로그인 하기
+userRouter.post('/login', asyncHandler(userLogin));
 
-// 홈 라우터
-router.get('/home', (req, res) => {
-  res.send('홈 페이지');
-});
+//회원가입 하기
+userRouter.post('/join', asyncHandler(userJoin));
 
-module.exports = router;
+//홈 화면
+// userRouter.get('/home', asyncHandler(userHome));

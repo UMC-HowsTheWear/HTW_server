@@ -1,47 +1,29 @@
-const express = require('express');
-const router = express.Router();
+import express from "express";
+import asyncHandler from 'express-async-handler';
 
-// 나의 패션은
-router.dkgkget('/:id/mysnap', (req, res) => {
-  console.log(`내 스냅 페이지 - 사용자 ID: ${req.params.id}`);
-});
+import { postMysnap } from "../controllers/post.controller.js";
+import { postCre } from "../controllers/post.controller.js";
+import { postRepair } from "../controllers/post.controller.js";
+import { postDel } from "../controllers/post.controller.js";
+import { postMypage } from "../controllers/post.controller.js";
+import { postMypageRepair } from "../controllers/post.controller.js";
 
-// 마이페이지 
-router.get('/:id/mypage', (req, res) => {
-  console.log(`마이페이지 - 사용자 ID: ${req.params.id}`);
-});
+export const postRouter = express.Router();
 
-// 마이페이지 수정하기
-router.patch('/:id/mypage/:id', (req, res) => {
-    console.log(`마이페이지 - 사용자 ID: ${req.params.id}`);
-  });
+//나의 패션은 - 내 게시물 조회
+postRouter.get('/mysnap',asyncHandler(postMysnap));
 
+//내 게시물 생성
+postRouter.post('/mysnap_create',asyncHandler(postCre));
 
-// 게시물 삭제
-router.delete('/:id/post', (req, res) => {
-  console.log(`포스트 페이지 - 사용자 ID: ${req.params.id}`);
-});
+//내 게시물 수정
+postRouter.patch('/mysnap_repair',asyncHandler(postRepair));
 
-module.exports = router;
+//내 게시물 삭제
+postRouter.delete('/mysnap_del',asyncHandler(postDel));
 
-//고치기전
-// import express from "express";
-// import asyncHandler from 'express-async-handler';
+//마이페이지
+postRouter.get('/mypage',asyncHandler(postMypage));
 
-// import { postMysnap } from "../controllers/user.controller.js";
-// import { userJoin } from "../controllers/user.controller.js";
-// import { userHome } from "../controllers/user.controller.js";
-
-// export const userRouter = express.Router();
-
-// //나의 패션은
-// userRouter.post('/:id/mysnap',asyncHandler());
-
-// //마이페이지
-// userRouter.get('/:id/mypage',asyncHandler());
-
-// //마이페이지 수정하기
-// userRouter.patch('/:id/mypage/:id',asyncHandler());
-
-// //게시물 삭제
-// userRouter.delete('/:id/post/',asyncHandler());
+//마이페이지 수정하기
+postRouter.patch('/mypage/:id',asyncHandler(postMypageRepair));
