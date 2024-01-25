@@ -1,17 +1,19 @@
-import express from "express";
-import asyncHandler from 'express-async-handler';
+const express = require('express');
+const router = express.Router();
 
-import { userLogin } from "../controllers/user.controller.js";
-import { userJoin } from "../controllers/user.controller.js";
-import { userHome } from "../controllers/user.controller.js";
+// 로그인 라우터
+router.get('/login', (req, res) => {
+  res.send('로그인 페이지');
+});
 
-export const userRouter = express.Router();
+// 회원가입 라우터
+router.get('/join', (req, res) => {
+  res.send('회원가입 페이지');
+});
 
-//로그인
-userRouter.post('/login', asyncHandler(userLogin));
+// 홈 라우터
+router.get('/home', (req, res) => {
+  res.send('홈 페이지');
+});
 
-//회원가입
-userRouter.post('/join', asyncHandler(userJoin));
-
-//홈 화면
-userRouter.get('/home', asyncHandler(userHome));
+module.exports = router;
