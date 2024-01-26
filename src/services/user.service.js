@@ -6,8 +6,7 @@ import { addUser, getUser, confirmUser } from "../models/user.dao.js";
 
 // 회원가입 처리, 추가된 사용자의 정보를 가져와 클라이언트에 반환하는 로직
 export const joinUser = async (body) => { 
-    //비동기적 작업 수행
-    const joinUserData = await addUser({ // adduser 함수를 호출해 새로운 사용자를 데이터 베이스에 추가
+    const joinUserData = await addUser({ 
         'login_id': body.login_id,
         'pwd': body.pwd,
         'nick': body.nick, 
@@ -16,13 +15,15 @@ export const joinUser = async (body) => {
         "style" : body.style
     });
 
-    console.log("joinUserData : " + joinUserData); // 콘솔에 추가해 어케 사용자 추가가 이루어졌는지 확인
+    console.log("joinUserData : " + joinUserData); 
 
-    if(joinUserData == -1){ // 받은 데이터가 -1이라면 실패
-        throw new BaseError(status.ID_ALREADY_EXIST); // ()안의 해당하는 에러를 던지고 함수의 실행을 중단, 아이디가 이미 존재
+    // -1을 반환하는 대신, 사용자가 이미 존재하는 경우 null을 반환하도록 변경
+    if (joinUserData === null) { 
+        return null;
     }
-    // 성공한 경우
-    return signinResponseDTO(await getUser(joinUserData)); // getUser함수를 이용해 새로 추가된 사용자의 정보를 가져오고 그 정보를 signinResponseDTO함수를 통해 가공해 반환, 반환한 정보는 회원가입 성공에 대한 응답으로 클라이언트에 전달
+
+    // 사용자가 정상적으로 추가된 경우 해당 사용자의 정보를 반환
+    return signinResponseDTO(await getUser(joinUserData));
 }
 
 // 로그인을 처리, 로그인 결과에 따라 성공 또는 실패를 나타내는 값을 반환
