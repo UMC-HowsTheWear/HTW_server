@@ -1,7 +1,7 @@
 // models/user.sql.js
 
 // signIn, login
-export const insertUserSql = "INSERT INTO user (login_id, pwd, nick, feel_heat, feel_cold, style ) VALUES (?, ?, ?, ?, ?, ?, ?);";
+export const insertUserSql = "INSERT INTO user (login_id, pwd, nick, feel_heat, feel_cold, style) VALUES (?, ?, ?, ?, ?, ?)";
 
 // 사용자 아이디를 사용해 해당 사용자의 모든 정보를 조회하는 쿼리
 export const getUserID = "SELECT * FROM user WHERE id = ?";
