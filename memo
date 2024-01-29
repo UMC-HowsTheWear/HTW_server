@@ -1,0 +1,92 @@
+# requestBody:
+#         x-name: body
+#         required: true
+#         content:
+#           application/json: 
+#             schema:
+#               required:
+#               - email
+#               - pwd
+#               - age
+#               - gender
+#               - name
+#               - feel_heat
+#               - feel_cold
+#               properties:
+#                 email:
+#                   type: string
+#                   description: 유저 아이디
+#                   example: garam@gnu.ac.kr
+#                 pwd:
+#                   type: string
+#                   description: 유저 비밀번호
+#                   example: qwer1234!
+#                 age:
+#                   type: integer
+#                   description: 유저 나이
+#                   example: 22
+#                 gender:
+#                   type: string
+#                   description: 유저 성별
+#                   example: man
+#                 name:
+#                   type: string
+#                   description: 유저 이름
+#                   example: garam
+#                 feel_heat:
+#                   type: integer
+#                   description: 더위 민감도
+#                   example: 50
+#                 feel_cold:
+#                   type: integer
+#                   description: 추위 민감도
+#                   example: 50
+
+
+
+
+
+
+# parameters:
+#         - name: email
+#           in: query
+#           required: true
+#           schema:
+#             type: string
+#           description: email
+#         - name: pwd
+#           in: query
+#           required: true
+#           schema:
+#             type: string
+#           description: 비밀번호
+#         - name: age
+#           in: query
+#           required: true
+#           schema:
+#             type: integer
+#           description: 나이
+#         - name: gender
+#           in: query
+#           required: true
+#           schema:
+#             type: string
+#           description: 성별
+#         - name: name
+#           in: query
+#           required: true
+#           schema:
+#             type: string
+#           description: 이름
+#         - name: feel_heat
+#           in: query
+#           required: true
+#           schema:
+#             type: integer
+#           description: 더위 민감도
+#         - name: feel_cold
+#           in: query
+#           required: true
+#           schema:
+#             type: integer
+#           description: 추위 민감도

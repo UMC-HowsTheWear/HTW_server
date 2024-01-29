@@ -23,7 +23,7 @@ externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
 servers:
-  - url: http://localhost:3000
+  - url: http://htwdb.ct0qe4so0r0a.ap-northeast-2.rds.amazonaws.com
 tags: 
   - name: User
     description: Operations about user
@@ -31,11 +31,11 @@ tags:
       description: Find out more
       url: http://swagger.io
 paths:
-  /user/signin:
+  /user/join:
     post:
       tags:
         - User
-      summary: signin
+      summary: 회원가입
       requestBody:
         x-name: body
         required: true
@@ -44,56 +44,122 @@ paths:
             schema:
               required:
               - email
-              - name
+              - pwd
+              - age
               - gender
-              - birthYear
-              - birthMonth
-              - birthDay
-              - addr
-              - specAddr
-              - phone
-              - prefer
+              - name
+              - feel_heat
+              - feel_cold
               properties:
                 email:
                   type: string
-                  description: 유저 이메일
+                  description: 유저 아이디
                   example: garam@gnu.ac.kr
-                name:
+                pwd:
                   type: string
-                  description: 유저 이름
-                  example: garam
+                  description: 유저 비밀번호
+                  example: qwer1234!
+                age:
+                  type: integer
+                  description: 유저 나이
+                  example: 22
                 gender:
                   type: string
                   description: 유저 성별
                   example: man
-                birthYear:
-                  type: integer
-                  description: 생일 년도
-                  example: 2003
-                birthMonth:
-                  type: integer
-                  description: 생일 월
-                  example: 4
-                birthDay:
-                  type: integer
-                  description: 생일 일
-                  example: 1
-                addr:
+                name:
                   type: string
-                  description: 주소
-                  example: gnu
-                specAddr:
-                  type: string
-                  description: 상세 주소
-                  example: gnu407
-                phone:
-                  type: string
-                  description: 전화 번호
-                  example: 010-1234-5678
-                prefer:
-                  type: array
-                  description: 선호 카테고리 번호
-                  example: [1, 3, 5]
+                  description: 유저 이름
+                  example: garam
+                feel_heat:
+                  type: integer
+                  description: 더위 민감도
+                  example: 50
+                feel_cold:
+                  type: integer
+                  description: 추위 민감도
+                  example: 50
+          
+      responses:
+        '200':
+          description: 회원가입
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 2000
+                  message:
+                    type: string
+                    example: "success!"
+                  data:
+                    type: object
+                    example: {
+                      "email": "swaggerTest@mail.com",
+                      "name": "swagger",
+                    }
+                
+        '400':
+          description: 잘못된 요청
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 400
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON001
+                  message:
+                    type: string
+                    example: 잘못된 요청입니다
+
+        '500':
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON000
+                  message:
+                    type: string
+                    example: 서버 에러, 관리자에게 문의 바랍니다
+
+
+  /user/login:
+    get:
+      tags:
+        - User
+      summary: 로그인
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: email
           
       responses:
         '200':
@@ -167,69 +233,18 @@ paths:
                     example: 서버 에러, 관리자에게 문의 바랍니다
 
 
-/user/signin:
-    post:
+  /user/home:
+    get:
       tags:
         - User
-      summary: signin
-      requestBody:
-        x-name: body
-        required: true
-        content:
-          application/json: 
-            schema:
-              required:
-              - email
-              - name
-              - gender
-              - birthYear
-              - birthMonth
-              - birthDay
-              - addr
-              - specAddr
-              - phone
-              - prefer
-              properties:
-                email:
-                  type: string
-                  description: 유저 이메일
-                  example: garam@gnu.ac.kr
-                name:
-                  type: string
-                  description: 유저 이름
-                  example: garam
-                gender:
-                  type: string
-                  description: 유저 성별
-                  example: man
-                birthYear:
-                  type: integer
-                  description: 생일 년도
-                  example: 2003
-                birthMonth:
-                  type: integer
-                  description: 생일 월
-                  example: 4
-                birthDay:
-                  type: integer
-                  description: 생일 일
-                  example: 1
-                addr:
-                  type: string
-                  description: 주소
-                  example: gnu
-                specAddr:
-                  type: string
-                  description: 상세 주소
-                  example: gnu407
-                phone:
-                  type: string
-                  description: 전화 번호
-                  example: 010-1234-5678
-                prefer:
-                  type: array
-                  description: 선호 카테고리 번호
-                  example: [1, 3, 5]
+      summary: 로그인
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: email
           
       responses:
         '200':
@@ -300,4 +315,769 @@ paths:
                     example: COMMON000
                   message:
                     type: string
-                    example: 서버 에러, 관리자에게 문의 바랍니다.
+                    example: 서버 에러, 관리자에게 문의 바랍니다
+
+
+  /user/around:
+    get:
+      tags:
+        - User
+      summary: 로그인
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: email
+          
+      responses:
+        '200':
+          description: 회원가입
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 2000
+                  message:
+                    type: string
+                    example: "success!"
+                  data:
+                    type: object
+                    example: {
+                      "email": "swaggerTest@mail.com",
+                      "name": "swagger",
+                      "preferCategory": [
+                        "한식",
+                        "일식"
+                      ]
+                    }
+                
+        '400':
+          description: 잘못된 요청
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 400
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON001
+                  message:
+                    type: string
+                    example: 잘못된 요청입니다
+
+        '500':
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON000
+                  message:
+                    type: string
+                    example: 서버 에러, 관리자에게 문의 바랍니다
+
+
+  /user/around/week:
+    get:
+      tags:
+        - User
+      summary: 로그인
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: email
+          
+      responses:
+        '200':
+          description: 회원가입
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 2000
+                  message:
+                    type: string
+                    example: "success!"
+                  data:
+                    type: object
+                    example: {
+                      "email": "swaggerTest@mail.com",
+                      "name": "swagger",
+                      "preferCategory": [
+                        "한식",
+                        "일식"
+                      ]
+                    }
+                
+        '400':
+          description: 잘못된 요청
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 400
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON001
+                  message:
+                    type: string
+                    example: 잘못된 요청입니다
+
+        '500':
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON000
+                  message:
+                    type: string
+                    example: 서버 에러, 관리자에게 문의 바랍니다
+
+
+  /user/around/week/:id:
+    get:
+      tags:
+        - User
+      summary: 로그인
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: email
+          
+      responses:
+        '200':
+          description: 회원가입
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 2000
+                  message:
+                    type: string
+                    example: "success!"
+                  data:
+                    type: object
+                    example: {
+                      "email": "swaggerTest@mail.com",
+                      "name": "swagger",
+                      "preferCategory": [
+                        "한식",
+                        "일식"
+                      ]
+                    }
+                
+        '400':
+          description: 잘못된 요청
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 400
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON001
+                  message:
+                    type: string
+                    example: 잘못된 요청입니다
+
+        '500':
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON000
+                  message:
+                    type: string
+                    example: 서버 에러, 관리자에게 문의 바랍니다
+
+
+  /user/around/week/:id/site:
+    get:
+      tags:
+        - User
+      summary: 로그인
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: email
+          
+      responses:
+        '200':
+          description: 회원가입
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 2000
+                  message:
+                    type: string
+                    example: "success!"
+                  data:
+                    type: object
+                    example: {
+                      "email": "swaggerTest@mail.com",
+                      "name": "swagger",
+                      "preferCategory": [
+                        "한식",
+                        "일식"
+                      ]
+                    }
+                
+        '400':
+          description: 잘못된 요청
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 400
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON001
+                  message:
+                    type: string
+                    example: 잘못된 요청입니다
+
+        '500':
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON000
+                  message:
+                    type: string
+                    example: 서버 에러, 관리자에게 문의 바랍니다
+
+
+  /user/around/next_week:
+    get:
+      tags:
+        - User
+      summary: 로그인
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: email
+          
+      responses:
+        '200':
+          description: 회원가입
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 2000
+                  message:
+                    type: string
+                    example: "success!"
+                  data:
+                    type: object
+                    example: {
+                      "email": "swaggerTest@mail.com",
+                      "name": "swagger",
+                      "preferCategory": [
+                        "한식",
+                        "일식"
+                      ]
+                    }
+                
+        '400':
+          description: 잘못된 요청
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 400
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON001
+                  message:
+                    type: string
+                    example: 잘못된 요청입니다
+
+        '500':
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON000
+                  message:
+                    type: string
+                    example: 서버 에러, 관리자에게 문의 바랍니다
+
+
+  /user/around/next_week/:id:
+    get:
+      tags:
+        - User
+      summary: 로그인
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: email
+          
+      responses:
+        '200':
+          description: 회원가입
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 2000
+                  message:
+                    type: string
+                    example: "success!"
+                  data:
+                    type: object
+                    example: {
+                      "email": "swaggerTest@mail.com",
+                      "name": "swagger",
+                      "preferCategory": [
+                        "한식",
+                        "일식"
+                      ]
+                    }
+                
+        '400':
+          description: 잘못된 요청
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 400
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON001
+                  message:
+                    type: string
+                    example: 잘못된 요청입니다
+
+        '500':
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON000
+                  message:
+                    type: string
+                    example: 서버 에러, 관리자에게 문의 바랍니다
+
+
+  /user/around/next_week/:id/site:
+    get:
+      tags:
+        - User
+      summary: 로그인
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: email
+          
+      responses:
+        '200':
+          description: 회원가입
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 2000
+                  message:
+                    type: string
+                    example: "success!"
+                  data:
+                    type: object
+                    example: {
+                      "email": "swaggerTest@mail.com",
+                      "name": "swagger",
+                      "preferCategory": [
+                        "한식",
+                        "일식"
+                      ]
+                    }
+                
+        '400':
+          description: 잘못된 요청
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 400
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON001
+                  message:
+                    type: string
+                    example: 잘못된 요청입니다
+
+        '500':
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON000
+                  message:
+                    type: string
+                    example: 서버 에러, 관리자에게 문의 바랍니다
+
+
+  /user/around/people:
+    get:
+      tags:
+        - User
+      summary: 로그인
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: email
+          
+      responses:
+        '200':
+          description: 회원가입
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 2000
+                  message:
+                    type: string
+                    example: "success!"
+                  data:
+                    type: object
+                    example: {
+                      "email": "swaggerTest@mail.com",
+                      "name": "swagger",
+                      "preferCategory": [
+                        "한식",
+                        "일식"
+                      ]
+                    }
+                
+        '400':
+          description: 잘못된 요청
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 400
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON001
+                  message:
+                    type: string
+                    example: 잘못된 요청입니다
+
+        '500':
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON000
+                  message:
+                    type: string
+                    example: 서버 에러, 관리자에게 문의 바랍니다
+
+
+  /user/around/other:
+    get:
+      tags:
+        - User
+      summary: 로그인
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: email
+          
+      responses:
+        '200':
+          description: 회원가입
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  isSuccess:
+                    type: boolean
+                    example: true
+                  code:
+                    type: integer
+                    example: 2000
+                  message:
+                    type: string
+                    example: "success!"
+                  data:
+                    type: object
+                    example: {
+                      "email": "swaggerTest@mail.com",
+                      "name": "swagger",
+                      "preferCategory": [
+                        "한식",
+                        "일식"
+                      ]
+                    }
+                
+        '400':
+          description: 잘못된 요청
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 400
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON001
+                  message:
+                    type: string
+                    example: 잘못된 요청입니다
+
+        '500':
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  isSuccess:
+                    type: boolean
+                    example: false
+                  code:
+                    type: integer
+                    example: COMMON000
+                  message:
+                    type: string
+                    example: 서버 에러, 관리자에게 문의 바랍니다

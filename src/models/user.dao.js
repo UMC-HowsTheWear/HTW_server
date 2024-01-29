@@ -9,8 +9,8 @@ import { confirmId, insertUserSql, getUserID, getUserPassword, getUserIDfromLogi
 export const addUser = async (data) => {
     try {
         const conn = await pool.getConnection();
-        console.log("data.login_id " + data.login_id);
-        const [confirm] = await pool.query(confirmId, data.login_id);
+        console.log("data.email " + data.email);
+        const [confirm] = await pool.query(confirmId, data.email);
 
         if (confirm[0].isExistId) {
             conn.release();
@@ -18,13 +18,13 @@ export const addUser = async (data) => {
         }
 
         const result = await pool.query(insertUserSql, [
-            data.login_id,
+            data.email,
             data.pwd,
-            data.nick,
+            data.age,
             data.gender,
+            data.name,
             data.feel_heat,
             data.feel_cold,
-            data.style
         ]);
 
         conn.release();
@@ -60,20 +60,20 @@ export const getUser = async (userId) => {  // userId로 사용자 정보 조회
 export const confirmUser = async (data) => {
     try {
         const conn = await pool.getConnection();
-        const [confirm] = await pool.query(confirmId, data.login_id);
+        const [confirm] = await pool.query(confirmId, data.email);
 
         if (confirm[0].isExistId == 0) {
             conn.release();
             return -1;
         }
 
-        const [pwd] = await pool.query(getUserPassword, data.login_id);
+        const [pwd] = await pool.query(getUserPassword, data.email);
         conn.release();
 
-        if (pwd[0].pwd !== data.pwd)
+        if (pwd[0].pwd != data.pwd)
             return -2;
         else {
-            const user_id = await pool.query(getUserIDfromLoginId, data.login_id);
+            const user_id = await pool.query(getUserIDfromLoginId, data.email);
             return user_id[0][0].id;
         }
     } catch (error) {
