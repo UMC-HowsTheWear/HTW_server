@@ -56,11 +56,29 @@ export const userLogin = async (req, res, next) => {
     }
 }
 
-// 홈 화면 조회
+// 홈 화면 날씨받아 아이템 뜨게 구현
 // export const userHome = async (req, res, next) => {
-//     console.log("홈");
+
+// try {
+//     const { latitude, longitude } = req.body;
+
+//     // 위치 정보를 기반으로한 추가적인 처리
+//     // 예를 들어, 날씨 정보를 기반으로 한 추천 아이템을 제공하는 기능 등을 구현
+
+//     res.json({ message: 'Recommendations generated based on location.' });
+    
+//     } catch (error) {
+//         console.error('Error:', error);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+//     console.log("홈화면"); //확인차
 //     console.log("body:", req.body); // 값이 잘 들어오나 찍어보기 위한 테스트용
 
 //     return res.send(response(status.SUCCESS, await getHome(req.params)));
 
+    // if (temp >= 25 ) {
+    //     for item 하..
+    // }
+
 // }
+
