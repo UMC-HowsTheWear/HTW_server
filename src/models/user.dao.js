@@ -7,7 +7,7 @@ import { confirmId, insertUserSql, getUserID, getUserPassword, getUserIDfromLogi
 
 // 회원가입
 export const addUser = async (data) => {
-    try {
+    //try {
         const conn = await pool.getConnection();
         console.log("data.email " + data.email);
         const [confirm] = await pool.query(confirmId, data.email);
@@ -29,16 +29,16 @@ export const addUser = async (data) => {
 
         conn.release();
         return result[0].insertId;
-    } catch (error) {
-        console.error("Error occurred while adding user:", error);
-        throw new BaseError(status.INTERNAL_SERVER_ERROR); // 내부 서버 오류 발생 시 에러 처리
-    }
+    // } catch (error) {
+    //     console.error("Error occurred while adding user:", error);
+    //     throw new BaseError(status.INTERNAL_SERVER_ERROR); // 내부 서버 오류 발생 시 에러 처리
+    // }
 }
 
 // 사용자 정보얻기
 //userId를 이용해 데베에 사용자 정보를 조회하는 함수
 export const getUser = async (userId) => {  // userId로 사용자 정보 조회
-    try {
+    //try {
         const conn = await pool.getConnection();
         const [user] = await pool.query(getUserID, userId); //getUserID 쿼리 실행시 주어진 userId에 해당하는 사용자 정보 조회
 
@@ -51,20 +51,22 @@ export const getUser = async (userId) => {  // userId로 사용자 정보 조회
         conn.release(); // 데베 해제
         return user; // 조회된 사용자 정보 반환
         
-    } catch (err) { // 에러 발생시 에러 던지기
-        throw new BaseError(status.PARAMETER_IS_WRONG);
-    }
+    // } catch (err) { // 에러 발생시 에러 던지기
+    //     throw new BaseError(status.PARAMETER_IS_WRONG);
+    // }
 }
 
 // 주어진 로그인 아이디와 비번 사용해 사용자를 확인하는 함수
 export const confirmUser = async (data) => {
-    try {
+    //try {
         const conn = await pool.getConnection();
         const [confirm] = await pool.query(confirmId, data.email);
 
         if (confirm[0].isExistId == 0) {
             conn.release();
             return -1;
+        }else{
+            console.log("아이디가 DB에 존재합니다.");
         }
 
         const [pwd] = await pool.query(getUserPassword, data.email);
@@ -74,11 +76,10 @@ export const confirmUser = async (data) => {
             return -2;
         else {
             const user_id = await pool.query(getUserIDfromLoginId, data.email);
-            return user_id[0][0].id;
+            return user_id[0][0].email;
         }
-    } catch (error) {
-        console.error("Error occurred while confirming user:", error);
-        throw new BaseError(status.INTERNAL_SERVER_ERROR); // 내부 서버 오류 발생 시 에러 처리
-    }
+    // } catch (error) {
+    //     console.error("Error occurred while confirming user:", error);
+    //     throw new BaseError(status.INTERNAL_SERVER_ERROR); // 내부 서버 오류 발생 시 에러 처리
+    // }
 }
-

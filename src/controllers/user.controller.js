@@ -1,10 +1,9 @@
 // uset.controller.js
 import { status } from '../../config/response.status.js';
 import { response } from '../../config/response.js';
-import { StatusCodes } from "http-status-codes";
 //services에서 함수 가져오기
 import { joinUser, loginUser } from './../services/user.service.js';
-// import { getHome } from './../providers/user.provider.js';
+//import { getHome } from './../providers/user.provider.js';
 
 //회원가입 garam 작성
 export const userJoin = async (req, res, next) => {
@@ -23,13 +22,13 @@ export const userLogin = async (req, res, next) => {
 }
 
 // 홈 화면 조회
-// export const userHome = async (req, res, next) => {
-//     console.log("홈");
-//     console.log("body:", req.body); // 값이 잘 들어오나 찍어보기 위한 테스트용
+export const userHome = async (req, res, next) => {
+    console.log("홈");
+    console.log("body:", req.body); // 값이 잘 들어오나 찍어보기 위한 테스트용
 
-//     return res.send(response(status.SUCCESS, await getHome(req.params)));
+    return res.send(response(status.SUCCESS, await getHome(req.params)));
 
-// }
+}
 
 
 // 회원가입
@@ -56,8 +55,9 @@ export const userLogin = async (req, res, next) => {
 
 // 로그인
 // export const userLogin = async (req, res, next) => {
+//     const logIn = req.body;
 //     console.log("로그인을 요청하였습니다!");
-//     const loginUserData = await loginUser(req.body); // loginUser 함수 호출후 loginUserData에 담음
+//     const loginUserData = await loginUser(logIn); // loginUser 함수 호출후 loginUserData에 담음
 
 //     console.log("login:", loginUserData); // 어떻게 받았는지
 

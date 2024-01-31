@@ -4,7 +4,7 @@
 export const insertUserSql = "INSERT INTO user (email, pwd, age, gender, name, feel_heat, feel_cold) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 // 사용자 아이디를 사용해 해당 사용자의 모든 정보를 조회하는 쿼리
-export const getUserID = "SELECT * FROM user WHERE id = ?";
+export const getUserID = "SELECT * FROM `user` WHERE id = ?";
 
 // 로그인 아이디를 사용해 해당 사용자의 아이디 조회 쿼리
 export const getUserIDfromLoginId = "SELECT id FROM user WHERE email = ?";

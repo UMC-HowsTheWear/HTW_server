@@ -23,9 +23,9 @@ externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
 servers:
-  - url: http://htwdb.ct0qe4so0r0a.ap-northeast-2.rds.amazonaws.com
+  - url: http://localhost:3000
 tags: 
-  - name: User
+  - name: user
     description: Operations about user
     externalDocs:
       description: Find out more
@@ -34,7 +34,7 @@ paths:
   /user/join:
     post:
       tags:
-        - User
+        - user
       summary: 회원가입
       requestBody:
         x-name: body
@@ -79,7 +79,7 @@ paths:
                   type: integer
                   description: 추위 민감도
                   example: 50
-          
+        
       responses:
         '200':
           description: 회원가입
@@ -103,9 +103,11 @@ paths:
                   data:
                     type: object
                     example: {
-                      "email": "swaggerTest@mail.com",
-                      "name": "swagger",
+                      "email": "garam@gnu.ac.kr",
+                      "name": "garam",
+                      "pwd": "qwer1234!"
                     }
+                    
                 
         '400':
           description: 잘못된 요청
@@ -149,21 +151,32 @@ paths:
 
 
   /user/login:
-    get:
+    post:
       tags:
-        - User
+        - user
       summary: 로그인
-      parameters:
-        - name: id
-          in: query
-          required: true
-          schema:
-            type: string
-          description: email
+      requestBody:
+        x-name: body
+        required: true
+        content:
+          application/json: 
+            schema:
+              required:
+              - email
+              - pwd
+              properties:
+                email:
+                  type: string
+                  description: 유저 아이디
+                  example: garam@gnu.ac.kr
+                pwd:
+                  type: string
+                  description: 비밀번호
+                  example: qwer1234!
           
       responses:
         '200':
-          description: 회원가입
+          description: 로그인
           content:
             application/json:
               schema:
@@ -184,12 +197,8 @@ paths:
                   data:
                     type: object
                     example: {
-                      "email": "swaggerTest@mail.com",
-                      "name": "swagger",
-                      "preferCategory": [
-                        "한식",
-                        "일식"
-                      ]
+                      "email": "garam@gnu.ac.kr",
+                      "pwd": "qwer1234!"
                     }
                 
         '400':
@@ -236,19 +245,12 @@ paths:
   /user/home:
     get:
       tags:
-        - User
-      summary: 로그인
-      parameters:
-        - name: id
-          in: query
-          required: true
-          schema:
-            type: string
-          description: email
+        - user
+      summary: 홈 메인
           
       responses:
         '200':
-          description: 회원가입
+          description: 홈 메인
           content:
             application/json:
               schema:
@@ -270,11 +272,7 @@ paths:
                     type: object
                     example: {
                       "email": "swaggerTest@mail.com",
-                      "name": "swagger",
-                      "preferCategory": [
-                        "한식",
-                        "일식"
-                      ]
+                      "name": "swagger"
                     }
                 
         '400':
@@ -321,7 +319,7 @@ paths:
   /user/around:
     get:
       tags:
-        - User
+        - user
       summary: 로그인
       parameters:
         - name: id
@@ -406,7 +404,7 @@ paths:
   /user/around/week:
     get:
       tags:
-        - User
+        - user
       summary: 로그인
       parameters:
         - name: id
@@ -491,7 +489,7 @@ paths:
   /user/around/week/:id:
     get:
       tags:
-        - User
+        - user
       summary: 로그인
       parameters:
         - name: id
@@ -576,7 +574,7 @@ paths:
   /user/around/week/:id/site:
     get:
       tags:
-        - User
+        - user
       summary: 로그인
       parameters:
         - name: id
@@ -661,7 +659,7 @@ paths:
   /user/around/next_week:
     get:
       tags:
-        - User
+        - user
       summary: 로그인
       parameters:
         - name: id
@@ -746,7 +744,7 @@ paths:
   /user/around/next_week/:id:
     get:
       tags:
-        - User
+        - user
       summary: 로그인
       parameters:
         - name: id
@@ -831,7 +829,7 @@ paths:
   /user/around/next_week/:id/site:
     get:
       tags:
-        - User
+        - user
       summary: 로그인
       parameters:
         - name: id
@@ -916,7 +914,7 @@ paths:
   /user/around/people:
     get:
       tags:
-        - User
+        - user
       summary: 로그인
       parameters:
         - name: id
@@ -1001,7 +999,7 @@ paths:
   /user/around/other:
     get:
       tags:
-        - User
+        - user
       summary: 로그인
       parameters:
         - name: id
@@ -1081,3 +1079,4 @@ paths:
                   message:
                     type: string
                     example: 서버 에러, 관리자에게 문의 바랍니다
+                

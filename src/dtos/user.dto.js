@@ -7,6 +7,6 @@ export const signinResponseDTO = (user) => {
 // 로그인 dto
 export const loginResponseDTO = (user) => {
     console.log("loginResponseDTO clear");
-    console.log(user[0].id);
-    return {"user_id": user[0].email, "name": user[0].name, "pwd": user[0].pwd};
+    console.log(user[0].email);
+    return {"email": user[0].email, "pwd": user[0].pwd};
 }

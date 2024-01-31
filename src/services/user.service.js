@@ -6,7 +6,7 @@ import { addUser, getUser, confirmUser } from "../models/user.dao.js";
 
 // 회원가입 처리, 추가된 사용자의 정보를 가져와 클라이언트에 반환하는 로직
 export const joinUser = async (body) => { 
-    try{
+    //try{
         const joinUserData = await addUser({ 
             'email': body.email,
             'pwd': body.pwd,
@@ -17,7 +17,7 @@ export const joinUser = async (body) => {
             'feel_cold': body.feel_cold
         });
     
-        //console.log("joinUserData : " + joinUserData); 
+        console.log("joinUserData : " + joinUserData); 
     
         // -1을 반환하는 대신, 사용자가 이미 존재하는 경우 null을 반환하도록 변경
         if (joinUserData == -1) { 
@@ -28,14 +28,14 @@ export const joinUser = async (body) => {
             console.log("회원가입 성공");
             return signinResponseDTO(await getUser(joinUserData));
         }
-    }catch (err) {
-        throw new BaseError(status.PARAMETER_IS_WRONG);
-    }
+    // }catch (err) {
+    //     throw new BaseError(status.PARAMETER_IS_WRONG);
+    // }
 }
 
 // 로그인을 처리, 로그인 결과에 따라 성공 또는 실패를 나타내는 값을 반환
  export const loginUser = async (body) => {
-    try{
+    //try{
         const loginUserData = await confirmUser({ //confirmUser 함수를 호출해 사용자의 로그인 확인
             'email': body.email,  // body 객체의 login_id와 pwd에 값을 전달
             'pwd' : body.pwd
@@ -50,11 +50,12 @@ export const joinUser = async (body) => {
             console.log("비밀번호가 틀렸습니다.");
             return new BaseError(status.PASSWORD_IS_WRONG); // -2 반환
         } else { //성공했다면
+            console.log("로그인에 성공했습니다.");
             return loginResponseDTO(await getUser(loginUserData)); // getUser 함수 호출해 정보 가져와 DTO  함수로 반환..  그 정보는 로그인 성공에 대한 응답으로 클라이언트에 전달 
         }
-    }catch (err) {
-        throw new BaseError(status.PARAMETER_IS_WRONG);
-    }
+    // }catch (err) {
+    //     throw new BaseError(status.PARAMETER_IS_WRONG);
+    // }
  }
 
 // 홈 화면 조회 //??
